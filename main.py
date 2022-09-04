@@ -1,16 +1,25 @@
-# This is a sample Python script.
+import requests
+from bs4 import BeautifulSoup
+from time import sleep
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+headers = {"User-Agent":
+               "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729)"}
 
+for count in range(1, 8):
+    sleep(3)
+    url = f"https://scrapingclub.com/exercise/list_basic/?page={count}"
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    response = requests.get(url, headers=headers)  # получаем ответ от сайта
 
+    soup = BeautifulSoup(response.text,
+                         "lxml")  # lxml - анализатор html кода помогающий парсить наш response,в переменную soup получили уже обработанный html код страницы
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    data = soup.find_all("div", class_="col-lg-4 col-md-6 mb-4")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for i in data:
+        name = i.find("h4", class_="card-title").text.strip()
+        price = i.find("h5").text
+        url_img = "https://scrapingclub.com" + i.find("img", class_="card-img-top img-fluid").get(
+            "src")  # метод get - получить содержимое атрибута
+
+        print(name + '\n' + price + '\n' + url_img + '\n\n')
