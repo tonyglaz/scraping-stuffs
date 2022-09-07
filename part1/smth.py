@@ -9,7 +9,7 @@ headers = {
 
 def download(url):
     resp = requests.get(url, stream=True)  # картинка грузится не целиком а порционно подается в байтах
-    r = open("D:\\Py_projects\\scraping\\images\\" + url.split("/")[-1], "wb")
+    r = open("D:\\Py_projects\\scraping\\part1\\images\\" + url.split("/")[-1], "wb")
     for value in resp.iter_content(1024 * 1024):  # iter_content позволяет пробежаться по потоку передаваемых данных
         r.write(value)
     r.close()
