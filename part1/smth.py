@@ -23,6 +23,7 @@ def get_url():
         soup = BeautifulSoup(response.text,
                              "lxml")  # lxml - анализатор html кода помогающий парсить наш response,в переменную soup получили уже обработанный html код страницы
         data = soup.find_all("div", class_="col-lg-4 col-md-6 mb-4")  # получили список всех карт на странице
+        print(data)
 
         for i in data:
             card_url = "https://scrapingclub.com" + i.find("a").get("href")
@@ -42,8 +43,16 @@ def run_function():
                              "lxml")
         data = soup.find("div", class_="card mt-4 my-4")
         name = data.find("h3", class_="card-title").text
+        print(name)
         price = data.find("h4").text
         text = data.find("p", class_="card-text").text
         url_img = "https://scrapingclub.com" + data.find("img", class_="card-img-top img-fluid").get("src")
         download(url_img)
         yield name, price, text, url_img
+
+def main():
+    run_function()
+
+
+if __name__=="__main__":
+    main()
