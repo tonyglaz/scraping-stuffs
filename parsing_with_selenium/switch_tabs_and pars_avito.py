@@ -3,10 +3,7 @@ import time
 from fake_useragent import UserAgent
 from selenium.webdriver.common.by import By
 
-auth_data = {
-    'login': '',
-    'pass': 'urpass'
-}
+auth_data = {'login': '', 'pass': 'urpass'}
 
 
 def main():
@@ -15,24 +12,26 @@ def main():
     options.add_argument(f'user-agent={useragent.opera}')  # ie,opera
     driver = webdriver.Chrome(
         executable_path=r'D:\Py_projects\scraping\parsing_with_selenium\chromedriver.exe',
-        options=options
-    )
+        options=options)
 
     # options.add_argument(f'user-agent={random.choice(user_agents)}')
     driver = webdriver.Chrome(
         executable_path=r'D:\Py_projects\scraping\parsing_with_selenium\chromedriver.exe',
-        options=options
-    )
+        options=options)
     try:
-        driver.get('https://www.avito.ru/moskva/tovary_dlya_kompyutera/komplektuyuschie/videokarty')
+        driver.get(
+            'https://www.avito.ru/moskva/tovary_dlya_kompyutera/komplektuyuschie/videokarty'
+        )
         print(driver.current_url)
-        item=driver.find_elements(By.XPATH, "//div[@data-marker='item-photo']")
+        item = driver.find_elements(By.XPATH,
+                                    "//div[@data-marker='item-photo']")
         time.sleep(3)
         item[0].click()
         driver.switch_to.window(driver.window_handles[1])
         print(driver.current_url)
         time.sleep(5)
-        adress=driver.find_element(By.CLASS_NAME,'style-item-address__string-wt61A')
+        adress = driver.find_element(By.CLASS_NAME,
+                                     'style-item-address__string-wt61A')
         print(adress.text)
 
         driver.close()
@@ -42,11 +41,10 @@ def main():
         item[1].click()
         time.sleep(2)
         driver.switch_to.window(driver.window_handles[1])
-        adress = driver.find_element(By.CLASS_NAME, 'style-item-address__string-wt61A')
+        adress = driver.find_element(By.CLASS_NAME,
+                                     'style-item-address__string-wt61A')
         print(adress.text)
         time.sleep(2)
-
-
 
     except Exception as ex:
         print(ex)
