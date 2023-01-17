@@ -6,7 +6,7 @@ from multiprocessing import Pool
 options = webdriver.ChromeOptions()
 useragent = UserAgent()
 options.add_argument(f'user-agent={useragent.opera}')  # ie,opera
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
 
 urls_list = ['https://vk.com',
              'https://www.youtube.com', 'https://stackoverflow.com']
